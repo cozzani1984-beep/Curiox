@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Heart, Users, Shuffle, ChevronDown, ChevronUp, RotateCcw, Plus, Minus, X, Trophy, Share2, Sparkles } from "lucide-react";
-import LOGO_SRC from "./assets/logo.png";
-import CARD_BACK_SRC from "./assets/card-back.jpeg";
-import { CATEGORIES, CARDS } from "./data/cards.js";
+import LOGO_SRC from "./logo.png";
+import CARD_BACK_SRC from "./card-back.jpeg";
+import { CATEGORIES, CARDS } from "./cards.js";
 
 const PALETTE = {
   bg: "#14101F",
