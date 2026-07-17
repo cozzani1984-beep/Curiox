@@ -80,7 +80,7 @@ export default function Curiox() {
   const [drawing, setDrawing] = useState(false);
   const [shareStatus, setShareStatus] = useState(null);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
-  const FREE_CARD_LIMIT = 20;
+  const FREE_CARD_LIMIT = 10;
   const [isPremium, setIsPremium] = useState(
     typeof window !== "undefined" && window.localStorage.getItem("curiox_premium") === "true"
   );
