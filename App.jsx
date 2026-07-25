@@ -85,6 +85,24 @@ export default function Curiox() {
     typeof window !== "undefined" && window.localStorage.getItem("curiox_premium") === "true"
   );
   const [paywallOpen, setPaywallOpen] = useState(false);
+const [installPrompt, setInstallPrompt] = useState(null);
+const isIOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+useEffect(() => {
+  const handler = (e) => {
+    e.preventDefault();
+    setInstallPrompt(e);
+  };
+  window.addEventListener("beforeinstallprompt", handler);
+  return () => window.removeEventListener("beforeinstallprompt", handler);
+}, []);
+
+const handleInstallClick = async () => {
+  if (!installPrompt) return;
+  installPrompt.prompt();
+  await installPrompt.userChoice;
+  setInstallPrompt(null);
+};
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -1061,6 +1079,21 @@ export default function Curiox() {
             >
               Sblocca il mazzo completo
             </button>
+            {installPrompt && (
+  <button
+    onClick={handleInstallClick}
+    className="curiox-sans w-full py-3 rounded-full text-sm mb-3"
+    style={{ background: "transparent", color: PALETTE.gold, border: `1px solid ${PALETTE.gold}55`, fontWeight: 600 }}
+  >
+    📲 Installa Curiox sul telefono
+  </button>
+)}
+{!installPrompt && isIOS && (
+  <p className="curiox-sans text-xs mb-3" style={{ color: PALETTE.textMuted, lineHeight: 1.5 }}>
+    📲 Dopo il pagamento, torna qui e tocca l'icona di condivisione del browser → "Aggiungi alla schermata Home" per avere Curiox come un'app vera.
+  </p>
+)}
+
             <button
               onClick={() => setPaywallOpen(false)}
               className="curiox-sans text-xs"
