@@ -130,6 +130,20 @@ useEffect(() => {
     window.removeEventListener("focus", syncPremium);
   };
 }, []);
+const VALID_CODE = "CURIOX2026";
+const [manualCode, setManualCode] = useState("");
+const [showCodeInput, setShowCodeInput] = useState(false);
+
+const handleManualUnlock = () => {
+  if (manualCode.trim().toUpperCase() === VALID_CODE) {
+    window.localStorage.setItem("curiox_premium", "true");
+    setIsPremium(true);
+    alert("Sbloccato con successo!");
+  } else {
+    alert("Codice non valido.");
+  }
+};
+
 
   const startCheckout = () => {
     const link = import.meta.env.VITE_STRIPE_PAYMENT_LINK;
