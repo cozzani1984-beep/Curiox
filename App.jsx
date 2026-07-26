@@ -138,6 +138,8 @@ const handleManualUnlock = () => {
   if (manualCode.trim().toUpperCase() === VALID_CODE) {
     window.localStorage.setItem("curiox_premium", "true");
     setIsPremium(true);
+    setPaywallOpen(false);
+
     alert("Sbloccato con successo!");
   } else {
     alert("Codice non valido.");
@@ -1152,11 +1154,11 @@ const handleManualUnlock = () => {
     📲 Installa Curiox sul telefono
   </button>
 )}
-{!installPrompt && isIOS && (
-  <p className="curiox-sans text-xs mb-3" style={{ color: PALETTE.textMuted, lineHeight: 1.5 }}>
-    📲 Dopo il pagamento, torna qui e tocca l'icona di condivisione del browser → "Aggiungi alla schermata Home" per avere Curiox come un'app vera.
-  </p>
-)}
+
+  
+    
+  
+
 
             <button
               onClick={() => setPaywallOpen(false)}
