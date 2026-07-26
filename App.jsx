@@ -1102,6 +1102,10 @@ const handleManualUnlock = () => {
             <p className="curiox-sans text-sm mb-6" style={{ color: PALETTE.textMuted }}>
               Sblocca il mazzo completo con tutte le categorie, i Quiz, le carte Intimità e i Jolly.
             </p>
+            <p className="curiox-sans text-xs mb-2" style={{ color: PALETTE.textMuted }}>
+  Utilizza Safari per acquistare il gioco. Dopo l'acquisto, tocca Condividi → Aggiungi alla schermata Home per avere l'applicazione direttamente sulla schermata.
+</p>
+
             <button
               onClick={startCheckout}
               className="curiox-sans w-full py-3 rounded-full text-base mb-3"
@@ -1109,6 +1113,36 @@ const handleManualUnlock = () => {
             >
               Sblocca il mazzo completo
             </button>
+            <div className="mt-3 text-center">
+  {!showCodeInput ? (
+    <button
+      onClick={() => setShowCodeInput(true)}
+      className="curiox-sans text-xs underline"
+      style={{ color: PALETTE.textMuted }}
+    >
+      Utilizza codice
+    </button>
+  ) : (
+    <div className="mt-2">
+      <input
+        type="text"
+        value={manualCode}
+        onChange={(e) => setManualCode(e.target.value)}
+        placeholder="Inserisci codice"
+        className="curiox-sans text-sm px-3 py-2 rounded-lg w-full mb-2"
+        style={{ background: PALETTE.panelSoft, color: PALETTE.text, border: `1px solid ${PALETTE.gold}` }}
+      />
+      <button
+        onClick={handleManualUnlock}
+        className="curiox-sans text-sm w-full py-2 rounded-lg"
+        style={{ background: PALETTE.gold, color: PALETTE.bg }}
+      >
+        Sblocca
+      </button>
+    </div>
+  )}
+</div>
+
             {installPrompt && (
   <button
     onClick={handleInstallClick}
