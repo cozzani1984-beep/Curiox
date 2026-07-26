@@ -114,6 +114,22 @@ const handleInstallClick = async () => {
       window.history.replaceState({}, "", cleanUrl);
     }
   }, []);
+useEffect(() => {
+  const syncPremium = () => {
+    if (window.localStorage.getItem("curiox_premium") === "true") {
+      setIsPremium(true);
+    }
+  };
+  window.addEventListener("storage", syncPremium);
+  document.addEventListener("visibilitychange", syncPremium);
+  window.addEventListener("focus", syncPremium);
+  syncPremium();
+  return () => {
+    window.removeEventListener("storage", syncPremium);
+    document.removeEventListener("visibilitychange", syncPremium);
+    window.removeEventListener("focus", syncPremium);
+  };
+}, []);
 
   const startCheckout = () => {
     const link = import.meta.env.VITE_STRIPE_PAYMENT_LINK;
