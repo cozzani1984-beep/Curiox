@@ -3,6 +3,7 @@ import { Heart, Users, Shuffle, ChevronDown, ChevronUp, RotateCcw, Plus, Minus, 
 import LOGO_SRC from "./logo.png";
 import CARD_BACK_SRC from "./card-back.jpeg";
 import { CATEGORIES, CARDS } from "./cards.js";
+let lastGeneratedCanvas = null;
 
 const PALETTE = {
   bg: "#14101F",
@@ -183,6 +184,8 @@ const handleManualUnlock = () => {
       H = 853;
     const scale = 2;
     const canvas = document.createElement("canvas");
+      lastGeneratedCanvas = canvas;
+
     canvas.width = W * scale;
     canvas.height = H * scale;
     const ctx = canvas.getContext("2d");
@@ -387,18 +390,30 @@ const handleManualUnlock = () => {
   };
 
   const shareCard = async () => {
-    if (!currentCard) return;
-    const text = getShareText();
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: "Curiox", text });
-        return;
+  if (!currentCard) return;
+  const text = getShareText();
+  try {
+    await generatePreview(currentCard);
+    if (navigator.share) {
+      if (lastGeneratedCanvas) {
+        const blob = await new Promise((resolve) => lastGeneratedCanvas.toBlob(resolve, "image/png"));
+        if (blob) {
+          const file = new File([blob], "curiox-carta.png", { type: "image/png" });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ title: "Curiox", text, files: [file] });
+            return;
+          }
+        }
       }
-    } catch (e) {
-      if (e && e.name === "AbortError") return;
+      await navigator.share({ title: "Curiox", text });
+      return;
     }
-    setShareMenuOpen((v) => !v);
-  };
+  } catch (e) {
+    if (e && e.name === "AbortError") return;
+  }
+  setShareMenuOpen((v) => !v);
+};
+
 
   return (
     <div
