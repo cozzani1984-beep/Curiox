@@ -82,6 +82,13 @@ export default function Curiox() {
   const [shareStatus, setShareStatus] = useState(null);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
   const FREE_CARD_LIMIT = 10;
+  const PAYWALL_COOLDOWN_MS = 48 * 60 * 60 * 1000;
+function isPaywallCoolingDown() {
+  const t = window.localStorage.getItem("curiox_paywall_hit_at");
+  if (!t) return false;
+  return Date.now() - Number(t) < PAYWALL_COOLDOWN_MS;
+}
+
   const [isPremium, setIsPremium] = useState(
     typeof window !== "undefined" && window.localStorage.getItem("curiox_premium") === "true"
   );
@@ -314,10 +321,14 @@ const handleManualUnlock = () => {
 
   const draw = () => {
     if (pending) return;
-    if (!isPremium && pointer + 1 >= FREE_CARD_LIMIT) {
-      setPaywallOpen(true);
-      return;
-    }
+    if (!isPremium && (pointer + 1 >= FREE_CARD_LIMIT || isPaywallCoolingDown())) {
+  if (!window.localStorage.getItem("curiox_paywall_hit_at")) {
+    window.localStorage.setItem("curiox_paywall_hit_at", Date.now().toString());
+  }
+  setPaywallOpen(true);
+  return;
+}
+
     setDrawing(true);
     setTimeout(() => setDrawing(false), 550);
     setShareMenuOpen(false);
