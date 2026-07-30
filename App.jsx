@@ -428,7 +428,7 @@ const handleManualUnlock = () => {
 
   return (
     <div
-      style={{ background: PALETTE.bg, color: PALETTE.text, minHeight: "100vh" }}
+      style={{ background: PALETTE.bg, color: PALETTE.text, minHeight: "100dvh" }}
       className="w-full flex flex-col items-center px-4 py-10 font-sans"
     >
       <style>{`
