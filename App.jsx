@@ -1130,9 +1130,12 @@ const handleManualUnlock = () => {
             <p className="curiox-sans text-sm mb-6" style={{ color: PALETTE.textMuted }}>
               Sblocca il mazzo completo con tutte le categorie, i Quiz, le carte Intimità e i Jolly.
             </p>
+            {isIOS && (
+
             <p className="curiox-sans text-xs mb-2" style={{ color: PALETTE.textMuted }}>
   Utilizza Safari per acquistare il gioco. Dopo l'acquisto, tocca Condividi → Aggiungi alla schermata Home per avere l'applicazione direttamente sulla schermata.
 </p>
+)}
 
             <button
               onClick={startCheckout}
