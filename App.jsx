@@ -1142,7 +1142,7 @@ const handleManualUnlock = () => {
               className="curiox-sans w-full py-3 rounded-full text-base mb-3"
               style={{ background: PALETTE.gold, color: PALETTE.bg, fontWeight: 700 }}
             >
-              Sblocca il mazzo completo
+              Sblocca il mazzo completo a soli €2,99
             </button>
             <div className="mt-3 text-center">
   {!showCodeInput ? (
