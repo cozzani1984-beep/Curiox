@@ -97,13 +97,18 @@ const [installPrompt, setInstallPrompt] = useState(null);
 const isIOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
 useEffect(() => {
+  if (window.deferredInstallPrompt) {
+    setInstallPrompt(window.deferredInstallPrompt);
+  }
   const handler = (e) => {
     e.preventDefault();
+    window.deferredInstallPrompt = e;
     setInstallPrompt(e);
   };
   window.addEventListener("beforeinstallprompt", handler);
   return () => window.removeEventListener("beforeinstallprompt", handler);
 }, []);
+
 
 const handleInstallClick = async () => {
   if (!installPrompt) return;
