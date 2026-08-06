@@ -2,6 +2,14 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
+    <script>
+  window.deferredInstallPrompt = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    window.deferredInstallPrompt = e;
+  });
+</script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Curiox — Un mazzo, infinite conversazioni</title>
     <meta name="description" content="Curiox è un mazzo di domande e sfide per scoprirsi, in coppia o in gruppo." />
